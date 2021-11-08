@@ -27,7 +27,7 @@ class Dino:
         self.move_factor = {'x': 100, 'y': 650}
         self.brain = brain
         self.game_params = game_params
-        self.brain.jumpAction = self.jump_brain_call
+        self.brain.jumpAction = self.jump_call
         self.brain.bendAction = self.down
         self.decreaseDinos = decreaseDinos
         self.mode = mode
@@ -58,6 +58,7 @@ class Dino:
         self.mask = self.mask_default
         if(self.mode == "game"):
             import keyboard
+            #self.master.bind('<Up>', self.jump_call)
             self.master.bind('<Up>', self.jump_call)
             # keyboard events
             keyboard.on_release_key('down', self.raiseDino)
@@ -68,7 +69,7 @@ class Dino:
         print("deleted") """
     def setBrain(self, brain):
         self.brain = brain
-        self.brain.jumpAction = self.jump_brain_call
+        self.brain.jumpAction = self.jump_call
         self.brain.bendAction = self.down
     def die(self):
         self.decreaseDinos()
@@ -125,13 +126,8 @@ class Dino:
             self.image = ImageTk.PhotoImage(self.imgs_pil_bent_running[self.current_pil_bent_running_index])
             self.canvas.itemconfig(self.id, image = self.image)
         self.animate()
-    def jump_call(self, event):
-        if(not self.moving):
-            self.raiseDino(None)
-            self.moving = True
-            self.jump(event)
 
-    def jump_brain_call(self, event):
+    def jump_call(self, event):
         if(not self.moving):
             self.raiseDino(None)
             self.moving = True
